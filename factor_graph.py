@@ -18,7 +18,7 @@ class FactorGraph:
         self.funcs = fg['functions']
 
         for v in self.vars:
-            self.vars[v]['value'] = self.vars[v]['domain'][0]
+            self.vars[v]['value'] = 0
             self.vars[v]['size'] = len(self.vars[v]['domain'])
 
     def get_value(self, name):
@@ -32,6 +32,9 @@ class FactorGraph:
         return value
 
     def get_neighbour_variables(self, var):
+        nvars = set()
         for f in self.vars[var]['functions']:
-            vars += self.funcs[f]['variables']
-        return vars
+            for v in self.funcs[f]['variables']:
+                if v != var:
+                    nvars.add(v)
+        return list(nvars)

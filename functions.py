@@ -4,7 +4,7 @@ class Functions1:
         self.fg = fg
 
     def v(self, var):
-        return self.fg.getValue(var)
+        return self.fg.get_value(var)
 
     def f1(self):
         return 3 * self.v("x1")**3
