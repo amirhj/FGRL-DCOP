@@ -1,4 +1,3 @@
-from util import Counter
 import random, util
 
 
@@ -19,7 +18,7 @@ class Agent:
             del actions[0]
         if self.fg.vars[self.name]['value'] == self.fg.vars[self.name]['size'] - 1:
             del actions[2]
-        print self.fg.vars[self.name]['value'], actions
+        # print self.fg.vars[self.name]['value'], actions
         return actions
 
     def get_state(self):
@@ -115,7 +114,7 @@ class Agent:
             diff = sum(next_state) - sum(state)
             if diff > 0:
                 terminate = False
-        elif 'dec' in actions:
+        if 'dec' in actions:
             self.fg.vars[self.name]['value'] -= 1
             next_state = self.get_state()
             self.fg.vars[self.name]['value'] += 1
@@ -132,17 +131,11 @@ class Agent:
 
     def run(self):
         state = self.get_state()
-        # print "state:", state
         action = self.policy(state)
-        # print "action:", action
         self.commit(action)
-        # print "commit"
         next_state = self.get_state()
-        # print "next state:", next_state
         action_profile = self.get_actions_profile(action)
-        # print "action profile:", action_profile
         reward = self.reward(state, action_profile, next_state)
-        # print "reward:", reward
         self.update(state, action_profile, next_state, reward)
 
     def get_best_responce(self, state):

@@ -15,13 +15,13 @@ class Scheduler:
     def run(self):
         timeout = self.opt['timeout']
         for i in range(self.opt['episodes']):
-            print "Episode", i+1, ":"
+            print "Episode", i+1, ":",
 
             t = 0
             while True:
                 for a in self.agents:
                     agent = self.agents[a]
-                    print "\tagent", agent.name
+                    # print "\tagent", agent.name
                     agent.run()
                     self.log[a].append(self.fg.vars[a]['value'])
                 t += 1
@@ -89,4 +89,7 @@ class Scheduler:
         terminated = True
         for a in self.agents:
             agent = self.agents[a]
-            terminated = terminated and agent.is_terminated()
+            if not agent.is_terminated():
+                terminated = False
+                break
+        return terminated
